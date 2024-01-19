@@ -38,11 +38,13 @@ async function run() {
     const ProdectCollection = client.db('emaJohnDB').collection('Prodect');
 
 app.get('/Prodect', async(req, res)=>{
-  console.log(req.query)
-  const page = parseInt(req.query.page) ||0;
-  const limit = parseInt(req.query.limit) || 0;
-  const skip = page * limit;
-  const result = await ProdectCollection.find().toArray();
+  const page = parseInt(req.query.page) 
+  const size  =parseInt(req.query.size)
+  console.log(page, size)
+  const result = await ProdectCollection.find().
+  skip(page * size)
+  .limit(size)
+  .toArray();
   res.send(result);
 })
 
